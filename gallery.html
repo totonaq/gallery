@@ -10,15 +10,20 @@
 	.wrapper {
 		width: 100%;
 	}
-	.container-gallery *:focus {
+	.another-container {
+		margin-top: 100px;
+	}
+	.container-gallery *:focus,
+	.another-container *:focus {
 		background: none;
 		outline: none;
 	}
-	.container-gallery {
+	.container-gallery, .another-container {
 		overflow-x: hidden;
 		position: relative;
 	}
-	.container-gallery div {
+	.container-gallery div,
+	.another-container div {
 		background-position: center;
 		background-repeat: no-repeat;
 	}
@@ -127,6 +132,9 @@
 		<img src="images/3.jpg" alt="">
 		<img src="images/4.jpg" alt="">
 		<img src="images/5.jpg" alt="">
+		
+	</div>
+	<!----><div class="another-container">
 		<img src="images/6.jpg" alt="">
 		<img src="images/7.jpg" alt="">
 		<img src="images/8.jpg" alt="">
@@ -134,11 +142,12 @@
 		<img src="images/10.jpg" alt="">
 		<img src="images/11.jpg" alt="">
 	</div>
+
 </div>
 	
-	<div class="wrap">
+	<!--<div class="wrap">
 		<button class="btn">button</button>
-	</div>
+	</div>-->
 	
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -150,46 +159,30 @@
 
 			//create neccessary elements and classes
 
-			const container = $('.container-gallery');
+			//const container = $('.container-gallery');
 
-			container.prepend('<div class="large-image"></div><div class="thumbnails"></div>');
-
-			const largeImg = $('.large-image');
-
-			container.append('<div class="controls"><div class="prev-button"></div><div class="next-button"></div></div>');
-
-			const prevBtn = $('.prev-button');
-
-			const nextBtn = $('.next-button');
+			let container,
+				largeImg,
+				prevBtn,
+				nextBtn,
+				thumbnails,
+				allThumbs,
+				galItem,
+				thumbWrap,
+				galItemLength,
+				currentNum;
 
 			let prevContent = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129"><g><path d="m88.6,121.3c0.8,0.8 1.8,1.2 2.9,1.2s2.1-0.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-51-51 51-51c1.6-1.6 1.6-4.2 0-5.8s-4.2-1.6-5.8,0l-54,53.9c-1.6,1.6-1.6,4.2 0,5.8l54,53.9z"/></g></svg>';
 			let nextContent = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129"><g><path d="m40.4,121.3c-0.8,0.8-1.8,1.2-2.9,1.2s-2.1-0.4-2.9-1.2c-1.6-1.6-1.6-4.2 0-5.8l51-51-51-51c-1.6-1.6-1.6-4.2 0-5.8 1.6-1.6 4.2-1.6 5.8,0l53.9,53.9c1.6,1.6 1.6,4.2 0,5.8l-53.9,53.9z"/></g></svg>';
-
-			const thumbnails = $('.thumbnails');
-
-			thumbnails.wrap('<div class="thmb-wrap"></div>')
-
-			thumbnails.append(container.find('img'));
-
-			thumbnails.find('img').wrap('<div class="gallery-item"></div>');
-
-			const galItem = $('.gallery-item');
-
-			galItem.each(function(elem) {
-				$(this).css('background-image', 'url('+ $(this).find('img').attr('src') +')');
-				$(this).find('img').remove()
-			});
-
-			const thumbWrap = $('.thmb-wrap');
 
 			//default settings
 
 			let defaults = {
 				defaultImg: 2,
-				width: 500,
+				width: 600,
 				height: 600,
 				thumbHeight: 150,
-				items: 6,
+				items: 3,
 				customControls: {
 					prevButton: prevContent,
 					nextButton: nextContent
@@ -205,12 +198,11 @@
 			};
 			let options = {};
 			let respOptions = {};
-			let currentNum;
-			let length = galItem.length;
 			
 			let methods = {
 				init: function() {
 					
+					this.createElements();
 					this.setContainerWidth();
 					this.setRespProp();
 					this.setDefaultNumber();
@@ -226,6 +218,38 @@
 					this.responsive();
 
 				},
+				createElements: function() {
+					container.prepend('<div class="large-image"></div><div class="thumbnails"></div>');
+
+					largeImg = container.find($('.large-image'));
+
+					container.append('<div class="controls"><div class="prev-button"></div><div class="next-button"></div></div>');
+
+					prevBtn = container.find($('.prev-button'));
+
+					nextBtn = container.find($('.next-button'));
+
+					thumbnails = container.find($('.thumbnails'));
+
+					thumbnails.wrap('<div class="thmb-wrap"></div>')
+
+					thumbnails.append(container.find('img'));
+
+					thumbnails.find('img').wrap('<div class="gallery-item"></div>');
+
+					allThumbs = $('.gallery-item');
+
+					galItem = container.find($('.gallery-item'));
+					galItemLength = galItem.length;
+
+					galItem.each(function(elem) {
+						$(this).css('background-image', 'url('+ $(this).find('img').attr('src') +')');
+						$(this).find('img').remove()
+					});
+
+					thumbWrap = $('.thmb-wrap');
+				},
+
 				setContainerWidth: function() {
 					container.width(options.width);
 				},
@@ -258,6 +282,9 @@
 				setDefaultNumber: function() {
 					largeImg.css('background-image', galItem.eq(options.defaultImg - 1).css('background-image'));
 					currentNum = options.defaultImg - 1;
+					galItem.eq(options.defaultImg - 1).addClass('active');
+					//console.log(currentNum)
+
 				},
 
 				setLargeImgDimensions: function() {
@@ -268,7 +295,7 @@
 				},
 
 				setThumbnailsWrapWidth: function() {
-					thumbnails.width(largeImg.width() / options.items * length);
+					thumbnails.width(largeImg.width() / options.items * galItemLength);
 				},
 
 				setThumbnailsDimensions: function() {
@@ -279,17 +306,17 @@
 				},
 
 				changeLargeImg: function() {
-					galItem.click(function() {
+					allThumbs.click(function() {
 
 						let clickedImg = $(this).css('background-image');
 
-						largeImg.css('background-image', clickedImg);
+						$(this).parent().parent().prev().css('background-image', clickedImg);
 
-						galItem.removeClass('active');
+						$(this).parent().children().removeClass('active');
 						
 						$(this).addClass("active");
 
-						currentNum = galItem.index($(this));
+						//currentNum = galItem.index($(this));
 						methods.makeInactiveBtn();
 					});
 
@@ -299,24 +326,41 @@
 					
 					prevBtn.click(function() {
 						
-						let prevThumb = galItem.eq([currentNum - 1]);
+						let active = $(this).parent().prev().find('.active').prev();
 
-						$(this).data('clicked', true);
+						console.log(active)
 
-						if (currentNum > 0) {
+						let allItems = $(this).parent().prev().find('.gallery-item');
+
+						//$(this).data('clicked', true);
+
+						let number = $(allItems).index(active);
+
+						if (number >= 0) {
 							
-							largeImg.css('background-image', prevThumb.css('background-image'));
-							galItem.removeClass('active');
-							prevThumb.addClass('active');
-							
-							currentNum = currentNum - 1;
+							$(this).parent().prev().prev().css('background-image', active.css('background-image'));
+							active.addClass('active');
+							active.next().removeClass('active');
 
-							methods.alignThumbs();
-		
+							//methods.alignThumbs();
+							
 						} else {
-							thumbWrap.scrollLeft(0);
+							$(this).parent().prev().scrollLeft(0);
 						}
-						methods.makeInactiveBtn();
+
+						$(this).parent().children().removeClass('inactive');
+						if (number < 1) {
+							$(this).addClass('inactive');
+						}
+						//methods.makeInactiveBtn.call(this, number, allItems);
+						//console.log(active.position().left)
+
+
+						if (active.position() != undefined && active.position().left < 0) {
+							$(this).parent().prev().scrollLeft(number * allItems.width() - $(this).parent().parent().width());
+						}
+						
+						
 					});
 					
 				},
@@ -324,49 +368,65 @@
 				next: function() {
 					
 					nextBtn.click(function() {
+
+						let active = $(this).parent().prev().find('.active').next();
+
+						let allItems = $(this).parent().prev().find('.gallery-item');
 						
-						let nextThumb = galItem.eq([currentNum + 1]);
+						//$(this).data('clicked', true);
 
-						$(this).data('clicked', true);
+						let number = $(allItems).index(active);
 
-						if (currentNum < length - 1) {
-							largeImg.css('background-image', nextThumb.css('background-image'));
-							galItem.removeClass('active');
-							nextThumb.addClass('active');
-							currentNum = currentNum + 1;
-
-							methods.alignThumbs();
-
+						if (number < allItems.length) {
+							$(this).parent().prev().prev().css('background-image', active.css('background-image'));
+							active.addClass('active');
+							active.prev().removeClass('active');
 						} else {
-							thumbWrap.scrollLeft(length * galItem.width());
+							$(this).parent().prev().scrollLeft(allItems.length * allItems.width());
 						}
-						methods.makeInactiveBtn();
+						console.log(number)
+						$(this).parent().children().removeClass('inactive');
+						if (number > allItems.length - 2 || number < 0) {
+							$(this).addClass('inactive');
+						}
+
+						//console.log(active.position().left)
+
+						
+						if (active.position() != undefined && active.position().left > $(this).parent().parent().width() -  allItems.width()) {
+							$(this).parent().prev().scrollLeft((number + 1) * allItems.width())
+						}
+						
+						
+
+						//methods.makeInactiveBtn.call(this, number, allItems);
+						
 					});
 
 				},
 
-				makeInactiveBtn: function() {
-					$('.controls').find('div').removeClass('inactive');
-					if (currentNum == 0) {
-						prevBtn.addClass('inactive');
-					} else if (currentNum == length - 1) {
-						nextBtn.addClass('inactive');
+				/*makeInactiveBtn: function(current, all) {
+					$(this).parent().children().removeClass('inactive');
+					if (current <= 1) {
+						$(this).parent().find('.prev-button').addClass('inactive');
+					} else if (current == all.length - 2) {
+						$(this).parent().find('.next-button').addClass('inactive');
 					}
-				},
+				},*/
 
 				justifyImgs: function(elem, ratio) { 
 					largeImg.css('background-size', 'cover');
 					galItem.css('background-size', 'cover');
 				},
 
-				alignThumbs: function() {
+				/*alignThumbs: function() {
 					if (prevBtn.data('clicked') && $('.active').position().left < 0) {
 							thumbWrap.scrollLeft((currentNum - options.items + 1) * galItem.width());
 			
 					} else if (nextBtn.data('clicked') && $('.active').position().left > (options.items - 1) * galItem.width()) {
 							thumbWrap.scrollLeft(currentNum * galItem.width());
 					}
-				},
+				},*/
 			
 				hzScroll: function() {
 					let curDown = false,
@@ -410,6 +470,9 @@
 			
 			
 			$.fn.gallery = function(params) {
+				
+				container = $(this);
+
 				options = respOptions = $.extend({}, defaults, params);
 				methods.init();
 				
@@ -443,8 +506,8 @@
 				items: 3
 			},
 			992 : {
-				defaultImg: 5,
-				items: 5,
+				defaultImg: 1,
+				items: 3,
 				//width: 400,  some methods should be banned!!!
 			}
 			//'customControls': {
@@ -452,6 +515,19 @@
 				//nextButton: 'right'
 			//}
 		}).css('color', 'red');
+
+		$('.another-container').gallery({
+			height: 300
+		});
+
+		/*TASKS
+		* 1) Add the ability to initialize plugin many times in a 
+		* document; fix current slide
+		* 2) get rid of <style> tag
+		* 3) set animation effects to slides (not necessary)
+		* 4) fix swipe!!!
+		* 5) delete some properties from responsive blocks (like width)
+		*/
 	</script>
 </body>
 </html>
