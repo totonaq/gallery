@@ -297,13 +297,13 @@
 		setPositionOfItem: function(active, number, allItems) {
 			if (active.position() != undefined && active.position().left < -5) {
 
-				$(this).parent().prev().scrollLeft(number * allItems.width() - $(this).parent().parent().width());
+				$(this).parent().prev().scrollLeft((number + 1)* allItems.width() - $(this).parent().parent().width());
 
 			}
 
 			if (active.position() != undefined && active.position().left >= $(this).parent().prev().width() - 5) {
 
-				$(this).parent().prev().scrollLeft((number + 1) * allItems.width())
+				$(this).parent().prev().scrollLeft((number) * allItems.width())
 
 			}
 		},
