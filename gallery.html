@@ -10,7 +10,7 @@
 	.wrapper {
 		width: 100%;
 	}
-	.another-container {
+	.another-container, .other-container {
 		margin-top: 100px;
 	}
 	.container-gallery *:focus,
@@ -18,12 +18,13 @@
 		background: none;
 		outline: none;
 	}
-	.container-gallery, .another-container {
+	.container-gallery, .another-container, .other-container {
 		overflow-x: hidden;
 		position: relative;
 	}
 	.container-gallery div,
-	.another-container div {
+	.another-container div,
+	.other-container div {
 		background-position: center;
 		background-repeat: no-repeat;
 	}
@@ -143,6 +144,16 @@
 		<img src="images/11.jpg" alt="">
 	</div>
 
+	</div>
+	<!----><div class="other-container">
+		<img src="images/6.jpg" alt="">
+		<img src="images/7.jpg" alt="">
+		<img src="images/8.jpg" alt="">
+		<img src="images/9.jpg" alt="">
+		<img src="images/10.jpg" alt="">
+		<img src="images/11.jpg" alt="">
+	</div>
+
 </div>
 	
 	<!--<div class="wrap">
@@ -157,20 +168,23 @@
 
 		(function($) {
 
-			//create neccessary elements and classes
-
-			//const container = $('.container-gallery');
-
 			let container,
-				largeImg,
+
+				largeImg = [],
+
 				prevBtn,
+				allPrev = [],
 				nextBtn,
-				thumbnails,
-				allThumbs,
-				galItem,
+				allNext = [],
+
 				thumbWrap,
-				galItemLength,
-				currentNum;
+				currentThumbs,
+				allThumbs = [],
+
+				currentGalItems,
+				allGalItems = [],
+				galItemLength = [];
+				
 
 			let prevContent = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129"><g><path d="m88.6,121.3c0.8,0.8 1.8,1.2 2.9,1.2s2.1-0.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-51-51 51-51c1.6-1.6 1.6-4.2 0-5.8s-4.2-1.6-5.8,0l-54,53.9c-1.6,1.6-1.6,4.2 0,5.8l54,53.9z"/></g></svg>';
 			let nextContent = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129"><g><path d="m40.4,121.3c-0.8,0.8-1.8,1.2-2.9,1.2s-2.1-0.4-2.9-1.2c-1.6-1.6-1.6-4.2 0-5.8l51-51-51-51c-1.6-1.6-1.6-4.2 0-5.8 1.6-1.6 4.2-1.6 5.8,0l53.9,53.9c1.6,1.6 1.6,4.2 0,5.8l-53.9,53.9z"/></g></svg>';
@@ -178,8 +192,7 @@
 			//default settings
 
 			let defaults = {
-				defaultImg: 2,
-				width: 600,
+				//defaultImg: 2,
 				height: 600,
 				thumbHeight: 150,
 				items: 3,
@@ -187,25 +200,21 @@
 					prevButton: prevContent,
 					nextButton: nextContent
 				},
-				//fullscreen: false
-				//480: {
-					//items: 2
-				//},
-				
-				/*992: {
-					items: 4
-				} */
 			};
-			let options = {};
-			let respOptions = {};
+
+			let options = {},
+				respOptions = {},
+
+				propArr = [],
+				respPropArr = [];
+
 			
 			let methods = {
 				init: function() {
-					
+
 					this.createElements();
-					this.setContainerWidth();
 					this.setRespProp();
-					this.setDefaultNumber();
+
 					this.setLargeImgDimensions();
 					this.setThumbnailsWrapWidth();
 					this.setThumbnailsDimensions();
@@ -213,100 +222,127 @@
 					this.justifyImgs();
 					this.prev();
 					this.next();
+				
 					this.hzScroll();
 					this.setCustomControls();
 					this.responsive();
-
+					
 				},
 				createElements: function() {
 					container.prepend('<div class="large-image"></div><div class="thumbnails"></div>');
 
-					largeImg = container.find($('.large-image'));
+					container.width('100%'); // move to styles
+
+
+					largeImg.push(container.find('.large-image'));
+
 
 					container.append('<div class="controls"><div class="prev-button"></div><div class="next-button"></div></div>');
 
-					prevBtn = container.find($('.prev-button'));
+					prevBtn = container.find('.prev-button');
 
-					nextBtn = container.find($('.next-button'));
+					prevBtn.addClass('inactive');
 
-					thumbnails = container.find($('.thumbnails'));
+					allPrev.push(prevBtn);
 
-					thumbnails.wrap('<div class="thmb-wrap"></div>')
+					nextBtn = container.find('.next-button');
 
-					thumbnails.append(container.find('img'));
+					allNext.push(nextBtn);
 
-					thumbnails.find('img').wrap('<div class="gallery-item"></div>');
 
-					allThumbs = $('.gallery-item');
+					currentThumbs = container.find('.thumbnails');
 
-					galItem = container.find($('.gallery-item'));
-					galItemLength = galItem.length;
+					currentThumbs.wrap('<div class="thmb-wrap"></div>')
 
-					galItem.each(function(elem) {
+					currentThumbs.append(container.find('img'));
+
+					currentThumbs.find('img').wrap('<div class="gallery-item"></div>');
+
+					allThumbs.push(currentThumbs);
+
+
+					currentGalItems = container.find('.gallery-item');
+
+					currentGalItems.eq(0).addClass('active');
+
+
+					allGalItems.push(currentGalItems);
+
+					galItemLength.push(currentGalItems.length);
+
+
+					currentGalItems.each(function(elem) {
 						$(this).css('background-image', 'url('+ $(this).find('img').attr('src') +')');
 						$(this).find('img').remove()
 					});
 
-					thumbWrap = $('.thmb-wrap');
-				},
 
-				setContainerWidth: function() {
-					container.width(options.width);
+					let currentImage = currentGalItems.eq(0).css('background-image');
+
+					container.find('.large-image').css('background-image', currentImage);
+
+
+					thumbWrap = $('.thmb-wrap');
+
 				},
 
 				setRespProp: function() {
-					let keys = [0];
-					$.each(options, function(key, value) {
-						let k = Number(key);
-						if (!isNaN(k)) {
-							keys.push(k);
-						}
-					});
-
-					let last = keys.length - 1;
-					
-					(function resp(item) {
-						if (item <= last - 1) {
-							if (container.width() >= keys[item] && container.width() < keys[item + 1]) {
-							options = $.extend({}, respOptions, options[keys[item + 1]]);
-							} else {
-								resp(item + 1);
+					for (let i = 0; i < propArr.length; i++) {
+						let keys = [0];
+						$.each(propArr[i], function(key, value) {
+							let k = Number(key);
+							if (!isNaN(k)) {
+								keys.push(k);
 							}
-						} else {
-							options = $.extend({}, respOptions);
-						}
-					})(0)
+						});
+						
+						let last = keys.length - 1;
 					
-				},
-
-				setDefaultNumber: function() {
-					largeImg.css('background-image', galItem.eq(options.defaultImg - 1).css('background-image'));
-					currentNum = options.defaultImg - 1;
-					galItem.eq(options.defaultImg - 1).addClass('active');
-					//console.log(currentNum)
-
+						(function resp(item) {
+							if (item <= last - 1) {
+								if (largeImg[i].width() >= keys[item] && largeImg[i].width() < keys[item + 1]) {
+								options = $.extend({}, respPropArr[i], propArr[i][keys[item + 1]]);
+								} else {
+									resp(item + 1);
+								}
+							} else {
+								options = $.extend({}, respPropArr[i]);
+							}
+							//
+						})(0);
+						
+						propArr.splice(i, 1, options);
+					}
+					
 				},
 
 				setLargeImgDimensions: function() {
-					largeImg.css({
-						'width':'100%',
-						'height':options.height
-					});
+					for (let i = 0; i < propArr.length; i++) {
+						largeImg[i].css({
+							'width':'100%',
+							'height':propArr[i].height
+						});
+					}
 				},
 
 				setThumbnailsWrapWidth: function() {
-					thumbnails.width(largeImg.width() / options.items * galItemLength);
+					for (let i = 0; i < propArr.length; i++) {
+						allThumbs[i].width(largeImg[i].width() / propArr[i].items * galItemLength[i]);
+					}
+					
 				},
 
 				setThumbnailsDimensions: function() {
-					galItem.css({
-						'width':largeImg.width() / options.items,
-						'height':options.thumbHeight
-					});
+					for (let i = 0; i < propArr.length; i++) {
+						allGalItems[i].css({
+							'width':largeImg[i].width() / propArr[i].items,
+							'height':propArr[i].thumbHeight
+						});
+					}
 				},
 
 				changeLargeImg: function() {
-					allThumbs.click(function() {
+					$('.gallery-item').click(function() {
 
 						let clickedImg = $(this).css('background-image');
 
@@ -316,8 +352,20 @@
 						
 						$(this).addClass("active");
 
-						//currentNum = galItem.index($(this));
-						methods.makeInactiveBtn();
+
+
+
+						let items = $(this).parent().children();
+
+						$(this).parent().parent().next().children().removeClass('inactive');
+
+						if (items.index($(this)) === 0) {
+							$(this).parent().parent().next().find('.prev-button').addClass('inactive');
+						}
+						if (items.index($(this)) === items.length - 1) {
+							$(this).parent().parent().next().find('.next-button').addClass('inactive');
+						}
+
 					});
 
 				},
@@ -328,11 +376,7 @@
 						
 						let active = $(this).parent().prev().find('.active').prev();
 
-						console.log(active)
-
 						let allItems = $(this).parent().prev().find('.gallery-item');
-
-						//$(this).data('clicked', true);
 
 						let number = $(allItems).index(active);
 
@@ -342,24 +386,13 @@
 							active.addClass('active');
 							active.next().removeClass('active');
 
-							//methods.alignThumbs();
-							
 						} else {
 							$(this).parent().prev().scrollLeft(0);
 						}
-
-						$(this).parent().children().removeClass('inactive');
-						if (number < 1) {
-							$(this).addClass('inactive');
-						}
-						//methods.makeInactiveBtn.call(this, number, allItems);
-						//console.log(active.position().left)
-
-
-						if (active.position() != undefined && active.position().left < 0) {
-							$(this).parent().prev().scrollLeft(number * allItems.width() - $(this).parent().parent().width());
-						}
 						
+						methods.setPositionOfItem.call(this, active, number, allItems);
+						
+						methods.makeInactiveBtn.call(this, number, allItems);
 						
 					});
 					
@@ -372,8 +405,6 @@
 						let active = $(this).parent().prev().find('.active').next();
 
 						let allItems = $(this).parent().prev().find('.gallery-item');
-						
-						//$(this).data('clicked', true);
 
 						let number = $(allItems).index(active);
 
@@ -384,49 +415,49 @@
 						} else {
 							$(this).parent().prev().scrollLeft(allItems.length * allItems.width());
 						}
-						console.log(number)
-						$(this).parent().children().removeClass('inactive');
-						if (number > allItems.length - 2 || number < 0) {
-							$(this).addClass('inactive');
-						}
+					
+						methods.setPositionOfItem.call(this, active, number, allItems);
 
-						//console.log(active.position().left)
-
-						
-						if (active.position() != undefined && active.position().left > $(this).parent().parent().width() -  allItems.width()) {
-							$(this).parent().prev().scrollLeft((number + 1) * allItems.width())
-						}
+						methods.makeInactiveBtn.call(this, number, allItems);
 						
 						
-
-						//methods.makeInactiveBtn.call(this, number, allItems);
+						//console.log(active.scrollLeft())
 						
 					});
 
 				},
 
-				/*makeInactiveBtn: function(current, all) {
-					$(this).parent().children().removeClass('inactive');
-					if (current <= 1) {
-						$(this).parent().find('.prev-button').addClass('inactive');
-					} else if (current == all.length - 2) {
-						$(this).parent().find('.next-button').addClass('inactive');
-					}
-				},*/
+				setPositionOfItem: function(active, number, allItems) {
+					if (active.position() != undefined && active.position().left < -5) {
 
-				justifyImgs: function(elem, ratio) { 
-					largeImg.css('background-size', 'cover');
-					galItem.css('background-size', 'cover');
+						$(this).parent().prev().scrollLeft(number * allItems.width() - $(this).parent().parent().width());
+
+					}
+
+					if (active.position() != undefined && active.position().left >= $(this).parent().prev().width() - 5) {
+
+						$(this).parent().prev().scrollLeft((number + 1) * allItems.width())
+
+					}
 				},
 
-				/*alignThumbs: function() {
-					if (prevBtn.data('clicked') && $('.active').position().left < 0) {
-							thumbWrap.scrollLeft((currentNum - options.items + 1) * galItem.width());
-			
-					} else if (nextBtn.data('clicked') && $('.active').position().left > (options.items - 1) * galItem.width()) {
-							thumbWrap.scrollLeft(currentNum * galItem.width());
+				makeInactiveBtn: function(number, allItems) {
+				
+					$(this).parent().children().removeClass('inactive');
+					if (number > allItems.length - 2 || number < 0) {
+						$(this).addClass('inactive');
+					} else if (number < 1) {
+						$(this).addClass('inactive');
 					}
-				},*/
+				},
+
+				justifyImgs: function() {
+					for (let i = 0; i < propArr.length; i++) {
+						largeImg[i].css('background-size', 'cover');
+						allGalItems[i].css('background-size', 'cover');
+					}
+					
+				},
 			
 				hzScroll: function() {
 					let curDown = false,
@@ -457,7 +488,7 @@
 
 				responsive: function() {
 					$(window).on('resize', function() {
-
+						
 						methods.setLargeImgDimensions();
 						methods.setThumbnailsWrapWidth();
 						methods.setThumbnailsDimensions();
@@ -474,6 +505,11 @@
 				container = $(this);
 
 				options = respOptions = $.extend({}, defaults, params);
+
+				propArr.push(options);
+
+				respPropArr.push(respOptions);
+				
 				methods.init();
 				
 				return this;
@@ -483,32 +519,29 @@
 		})(jQuery);
 
 		$('.container-gallery').gallery({
-			defaultImg: 1,
-			width: '100%',
-			//whRatio: 1.5,
-			//items: 3,
-			//thumbRatio: 4,
 			
+			width: '100%',
+			//items: 3,
 			480: {
-				defaultImg: 1,
+				
 				items: 2,
 				height: 400,
 				thmbHeight: 100
 			},
 			768: {
-				defaultImg: 3,
+				
 				items: 4,
 				height: 500,
 				thmbHeight: 120
 			},
 			600: {
-				defaultImg: 4,
+				
 				items: 3
 			},
 			992 : {
-				defaultImg: 1,
+				
 				items: 3,
-				//width: 400,  some methods should be banned!!!
+				height: 350
 			}
 			//'customControls': {
 				//prevButton: 'left',
@@ -516,17 +549,49 @@
 			//}
 		}).css('color', 'red');
 
-		$('.another-container').gallery({
-			height: 300
+		/**/$('.another-container').gallery({
+			height: 300,
+			width: '100%',
+			480: {
+				
+				items: 2,
+				height: 400,
+				thmbHeight: 100
+			},
+			768: {
+				
+				items: 4,
+				height: 500,
+				thmbHeight: 120
+			},
+			600: {
+				
+				items: 3
+			},
+			992 : {
+				
+				items: 5,
+				height: 650
+			}
 		});
 
+		$('.other-container').gallery({
+			height: 300,
+			width: '100%',
+			
+			992 : {
+				
+				items: 2,
+				height: 750
+			}
+		})
+
 		/*TASKS
-		* 1) Add the ability to initialize plugin many times in a 
-		* document; fix current slide
+		*
 		* 2) get rid of <style> tag
 		* 3) set animation effects to slides (not necessary)
 		* 4) fix swipe!!!
-		* 5) delete some properties from responsive blocks (like width)
+		* 5) fix setPositionOfItem
 		*/
 	</script>
 </body>
