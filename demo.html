@@ -38,6 +38,13 @@
 		<img src="http://fonday.ru/images/tmp/9/0/original/9006t78zCLKGcp2JI0obSvMXn.jpg" alt="">
 		
 	</div>
+	<!--<div class="another-gallery">
+		<img src="http://katyaburg.ru/sites/default/files/pictures/krasota_prirody/morskie_peyzagi_krasivie_plyagi_foto_12.jpg" alt="">
+		<img src="http://img-fotki.yandex.ru/get/6305/159303434.9e/0_7c779_5df17311_orig.jpg" alt="">
+		<img src="http://rylik.ru/uploads/posts/2014-05/1401091261_2.jpg" alt="">
+		<img src="http://rylik.ru/uploads/posts/2014-07/1405546678_1.jpg" alt="">
+		<img src="http://newpix.ru/wp-content/uploads/2012/03/421422.jpg" alt="">
+	</div>-->
 
 </div>
 	
@@ -49,6 +56,7 @@
 		$('.container-gallery').gallery({
 			height: 650,
 			width: '100%',
+			items: 6,
 			480: {
 				items: 2,
 				height: 400,
@@ -56,31 +64,33 @@
 			},
 			768: {
 				
-				items: 4,
+				items: 3,
 				height: 500,
 				thmbHeight: 120
 			},
 			600: {
 				
-				items: 3
+				items: 4
 			},
 			992 : {
 				
-				items: 3,
+				items: 5,
 				height: 350
 			}
 			//'customControls': {
 				//prevButton: 'left',
 				//nextButton: 'right'
 			//}
-		})
+		});
+
+		//$('.another-gallery').gallery();
 
 		/*TASKS
 		*
-		* 2) get rid of <style> tag
+		* 
 		* 3) set animation effects to slides (not necessary)
-		* 4) fix swipe!!!
-		* 5) fix setPositionOfItem
+		* 
+		* 
 		*/
 	</script>
 </body>

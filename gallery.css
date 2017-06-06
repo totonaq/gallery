@@ -43,7 +43,12 @@
 .controls svg {
 	fill: #fff;
 }
-
+.thumbnails {
+	cursor: grab;
+	cursor: -o-grab;
+	cursor: -moz-grab;
+	cursor: -webkit-grab;
+}
 .thumbnails > div.active {
 	border: 2px solid #fff;
 }
