@@ -64,11 +64,11 @@ $('.simple-gallery').gallery({
       height: 400
     },
     768: {
-      items: 3,
+      items: 4,
       height: 450
     },
-    600: {
-      items: 4
+    600: { //order doesn't matter
+      items: 3
     },
     992 : {
       height: 500
