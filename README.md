@@ -22,12 +22,12 @@ Wrap your `img`'s with a container element (`div`). You can use the class name w
 
 ```html
 <div class="simple-gallery">
-  <img src="[your path].[extension]">
-  <img src="[your path].[extension]">
-  <img src="[your path].[extension]">
-  <img src="[your path].[extension]">
-  <img src="[your path].[extension]">
-  <img src="[your path].[extension]">
+  <img src="[your path]/img1.jpg">
+  <img src="[your path]/img2.jpg">
+  <img src="[your path]/img3.jpg">
+  <img src="[your path]/img4.jpg">
+  <img src="[your path]/img5.jpg">
+  <img src="[your path]/img6.jpg">
 </div>
 ```
 
