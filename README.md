@@ -60,8 +60,8 @@ $('.simple-gallery').gallery({
     height: 600,
     items: 6,
     480: {
-				items: 2,
-				height: 400
+      items: 2,
+      height: 400
     },
     768: {
       items: 3,
