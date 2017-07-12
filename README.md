@@ -77,3 +77,4 @@ $('.simple-gallery').gallery({
   }
 });
 ```
+Look at the [demo](https://totonaq.github.io/Gallery-Plugin/).
