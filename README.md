@@ -48,6 +48,7 @@ $('.simple-gallery').gallery({
     height: 600,
     items: 6,
     thmbHeight: 100,
+    showThumbnails: true,
     customControls: { /*you can insert html-elements like 
     	'<i class="fa fa-angle-right" aria-hidden="true"></i>'*/
       prevButton: 'prev',
