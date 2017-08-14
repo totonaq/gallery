@@ -5,58 +5,380 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Gallery</title>
+	<link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Mada|Sedgwick+Ave" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Indie+Flower|Mada|Sedgwick+Ave" rel="stylesheet">
 	<link rel="stylesheet" href="gallery.css">
+	<style>
+		body, h1, h2, h3, h5, p, ul, li, footer {
+			margin: 0;
+			padding: 0;
+		}
+		ul {
+			list-style-type: none;
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+		}
+		ul > li {
+			padding: 0 1rem;
+		}
+		ul > li > a {
 
+			text-decoration: none;
+
+		}
+		ul > li > a:hover {
+			text-decoration: underline;
+		}
+		body {
+			font-family: 'Sedgwick Ave', cursive;
+			position: relative;
+		}
+		header {
+			background-color: rgba(255,255,255,.7);
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			justify-content: space-between;
+			padding: 2rem;
+		}
+		header a {
+			color: #000;
+		}
+		.logo:hover {
+			color: #3fb5b0;
+		}
+		.document {
+			
+		}
+
+		.wrapper {
+			padding: 4rem;
+			margin: auto;
+			width: 50%;
+		}
+		.wrapper .large-image {
+			border: 5px solid #fff;
+			-webkit-box-shadow: 0 7px 10px #666;
+			box-shadow: 0 7px 25px #666;
+		}
+		.wrapper .thmb-wrap {
+			border: 5px solid #fff;
+			-webkit-box-shadow: 0 7px 10px #666;
+			box-shadow: 0 7px 25px #666;
+			margin-top: 3rem;
+		}
+		.heading {
+			font-size: 2rem;
+			padding: 1rem 0;
+		}
+		.container-gal {
+			margin-top: 50px;
+		}
+		.descr {
+			background-color: rgba(220,220,220,.4);
+			/*border: 5px solid #fff;*/
+			-webkit-box-shadow: 0 7px 10px #666;
+			box-shadow: 0 7px 25px #666;
+			color: #000;
+			font: 1.5rem/1.5 'Indie Flower', cursive;
+			margin: 4rem 4rem 0;
+			padding: 2rem;
+			width: 50%;
+		}
+		.back {
+			background: url('images/many.jpg') center center/ cover no-repeat;
+			bottom: 0;
+			filter: grayscale(100%);
+			opacity: .2;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: -1;
+		}
+		.options {
+			padding-bottom: 4rem;
+		}
+		.options h1 {
+			font-size: 1.4rem;
+			text-align: center;
+			
+			text-transform: uppercase;
+		}
+		.options-descr-wrap {
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			font-size: 1.2rem;
+			justify-content: flex-end;
+		}
+		.options-list {
+			background-color: rgba(255,255,255,.7);
+			-webkit-box-shadow: 0 7px 10px #666;
+			box-shadow: 0 7px 25px #666;
+			font-family: 'Indie Flower', cursive;
+			font-size: 1.2rem;
+			margin: 2rem auto;
+			padding: 1rem 2rem;
+			width: 60%;
+		}
+		.option-head {
+			color: #3fb5b0;
+			font-family: 'Mada', sans-serif;
+			font-size: 1.4rem;
+		}
+		.option-item {
+			padding-bottom: 1rem;
+		}
+		hr {
+			border: 1px solid #e6e6e6;
+		}
+		code {
+			background-color: #e1e1e1;
+			border-radius: 2px;
+			padding: 3px;
+		}
+		footer {
+			background-color: rgba(214,214,214,.7);
+			padding: 1rem 0;
+			text-align: center;
+		}
+		footer a {
+			color: #343434;
+			font-family: 'Mada', sans-serif;
+			font-weight: bold;
+			text-decoration: none;
+			text-transform: uppercase;
+		}
+		footer a:hover {
+			color: #3fb5b0;
+		}
+	</style>
 </head>
 <body>
-<div class="wrapper">
-	<div class="container-gallery">
-		<img src="http://katyaburg.ru/sites/default/files/pictures/krasota_prirody/morskie_peyzagi_krasivie_plyagi_foto_12.jpg" alt="">
-		<img src="http://img-fotki.yandex.ru/get/6305/159303434.9e/0_7c779_5df17311_orig.jpg" alt="">
-		<img src="http://rylik.ru/uploads/posts/2014-05/1401091261_2.jpg" alt="">
-		<img src="http://rylik.ru/uploads/posts/2014-07/1405546678_1.jpg" alt="">
-		<img src="http://newpix.ru/wp-content/uploads/2012/03/421422.jpg" alt="">
-		<img src="http://rylik.ru/uploads/posts/2014-12/1418247400_1.jpg" alt="">
-		<img src="http://www.gandex.ru/upl/oboi/gandex.ru-23402_a4f3acc709408e852e78472a5189e571.jpg" alt="">
-		<img src="http://www.v3wall.com/wallpaper/1920_1200/0911/1920_1200_20091110091813332890.jpg" alt="">
-		<img src="http://www.v3wall.com/wallpaper/1920_1200/0911/1920_1200_20091110091305566009.jpg" alt="">
-		<img src="http://kartinka1.ru/pejzazhi/more/1/morskoj_pejzazh-3.jpg" alt="">
-		<img src="http://fonday.ru/images/tmp/9/0/original/9006t78zCLKGcp2JI0obSvMXn.jpg" alt="">
-		
+<header>
+	<a class="logo" href="https://github.com/totonaq/Gallery-Plugin">gallery.js</a>
+	<nav>
+		<ul>
+			<li><a href="#demo">Demo</a></li>
+			<li><a href="#options">Options</a></li>
+			<li><a href="https://github.com/totonaq/Gallery-Plugin/archive/master.zip">Download</a></li>
+		</ul>
+	</nav>
+</header>
+<section class="document">
+	<div class="back"></div>
+	<p class="descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis animi vero quidem fuga dolorum voluptates non iste asperiores numquam quam totam nesciunt repellendus sunt, explicabo ipsam veritatis exercitationem. Iste, odio!</p>
+	<div class="wrapper">
+
+	<h1 id="demo" class="heading">Peace begins with a smile...</h1>
+		<div class="container-gallery">
+			<!--<img src="http://katyaburg.ru/sites/default/files/pictures/krasota_prirody/morskie_peyzagi_krasivie_plyagi_foto_12.jpg" alt="">
+			<img src="http://img-fotki.yandex.ru/get/6305/159303434.9e/0_7c779_5df17311_orig.jpg" alt="">
+			<img src="http://rylik.ru/uploads/posts/2014-05/1401091261_2.jpg" alt="">
+			<img src="http://rylik.ru/uploads/posts/2014-07/1405546678_1.jpg" alt="">
+			<img src="http://newpix.ru/wp-content/uploads/2012/03/421422.jpg" alt="">
+			<img src="http://rylik.ru/uploads/posts/2014-12/1418247400_1.jpg" alt="">
+			<img src="http://www.gandex.ru/upl/oboi/gandex.ru-23402_a4f3acc709408e852e78472a5189e571.jpg" alt="">
+			<img src="http://www.v3wall.com/wallpaper/1920_1200/0911/1920_1200_20091110091813332890.jpg" alt="">
+			<img src="http://www.v3wall.com/wallpaper/1920_1200/0911/1920_1200_20091110091305566009.jpg" alt="">
+			<img src="http://kartinka1.ru/pejzazhi/more/1/morskoj_pejzazh-3.jpg" alt="">
+			<img src="http://fonday.ru/images/tmp/9/0/original/9006t78zCLKGcp2JI0obSvMXn.jpg" alt="">-->
+			<img src="https://upload.wikimedia.org/wikipedia/commons/8/8f/India_-_Delhi_smiling_girls_-_4698.jpg" alt="">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Smiling_Bhutanese_school_children.jpg/492px-Smiling_Bhutanese_school_children.jpg" alt="">
+			<img src="https://static.pexels.com/photos/61100/pexels-photo-61100.jpeg" alt="">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Dil_Se_Education_-_Smiling_Child_at_School.JPG" alt="">
+			<img src="https://c.pxhere.com/photos/34/87/girl_indian_girl_female_young_asian_adult_face_model-626357.jpg!d" alt="">
+			<img src="https://images.pexels.com/photos/160914/smile-man-worker-vertical-160914.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="">
+			<img src="https://c.pxhere.com/photos/d6/f9/girl_smile_face_smiling_happy_portrait_people_eyes-1087629.jpg!d" alt="">
+			<img src="https://c.pxhere.com/photos/39/52/kid_smile_child_happy_smiling_people_children_young-897665.jpg!d" alt="">
+			<img src="http://www.publicdomainpictures.net/pictures/70000/velka/woman-smiling.jpg" alt="">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Japanese_schoolboys_smiling.jpg" alt="">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/A_Smile_at_Last_%28Imagicity_617%29.jpg/800px-A_Smile_at_Last_%28Imagicity_617%29.jpg" alt="">
+			<img src="https://images.pexels.com/photos/34540/old-lady-smile-beautiful-woman.jpg?w=940&h=650&auto=compress&cs=tinysrgb" alt="">
+		</div>
+		<div class="container-gal">
+			<!--<img src="http://katyaburg.ru/sites/default/files/pictures/krasota_prirody/morskie_peyzagi_krasivie_plyagi_foto_12.jpg" alt="">
+			<img src="http://img-fotki.yandex.ru/get/6305/159303434.9e/0_7c779_5df17311_orig.jpg" alt="">
+			<img src="http://rylik.ru/uploads/posts/2014-05/1401091261_2.jpg" alt="">
+			<img src="http://rylik.ru/uploads/posts/2014-07/1405546678_1.jpg" alt="">
+			<img src="http://newpix.ru/wp-content/uploads/2012/03/421422.jpg" alt="">
+			<img src="http://rylik.ru/uploads/posts/2014-12/1418247400_1.jpg" alt="">
+			<img src="http://www.gandex.ru/upl/oboi/gandex.ru-23402_a4f3acc709408e852e78472a5189e571.jpg" alt="">
+			<img src="http://www.v3wall.com/wallpaper/1920_1200/0911/1920_1200_20091110091813332890.jpg" alt="">
+			<img src="http://www.v3wall.com/wallpaper/1920_1200/0911/1920_1200_20091110091305566009.jpg" alt="">
+			<img src="http://kartinka1.ru/pejzazhi/more/1/morskoj_pejzazh-3.jpg" alt="">
+			<img src="http://fonday.ru/images/tmp/9/0/original/9006t78zCLKGcp2JI0obSvMXn.jpg" alt="">-->
+
+			
+		</div>
 	</div>
 
-</div>
+</section>
+
+<section id="options" class="options">
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<script src='gallery.js'></script>
+	<h1>options</h1>
+	<!--<div class="options-descr-wrap">
+		<p class="descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis animi vero quidem fuga dolorum voluptates non iste asperiores numquam quam totam nesciunt repellendus sunt, explicabo ipsam veritatis exercitationem. Iste, odio!</p>
+	</div>-->
+	
+	<div class="options-list">
+		<h4 class="option-head">height</h4>
+		<p class="option-item">
+			Type:
+			<code>Number</code> or <code>String</code><br>
+			Default:
+			<code>600</code><br>
+		</p>
+		<p class="option-item">Height of the main image</p>
+		<hr>
+		<h4 class="option-head">showThumbnails</h4>
+		<p class="option-item">
+			Type:
+			<code>Boolean</code><br>
+			Default:
+			<code>true</code><br>
+			
+		</p>
+		<p class="option-item">Show or hide thumbnails</p>
+		<hr>
+		<h4 class="option-head">thumbHeight</h4>
+		<p class="option-item">
+			Type:
+			<code>Number</code><br>
+			Default:
+			<code>150</code><br>
+			
+		</p>
+		<p class="option-item">Thumbnails height</p>
+		<hr>
+		<h4 class="option-head">singleLine</h4>
+		<p class="option-item">
+			Type:
+			<code>Boolean</code><br>
+			Default:
+			<code>false</code><br>
+			
+		</p>
+		<p class="option-item">Shows thumbnails in one line or as a tiles grid</p>
+		<hr>
+		<h4 class="option-head">items</h4>
+		<p class="option-item">
+			Type:
+			<code>Number</code><br>
+			Default:
+			<code>3</code><br>
+			
+		</p>
+		<p class="option-item">The number of items you want to see on the screen</p>
+		<hr>
+		<h4 class="option-head">customControls</h4>
+		<p class="option-item">
+			Type:
+			<code>Object</code><br>
+			Default:
+			<code>svg</code> icons<br>
+			
+		</p>
+		<p class="option-item">Object containing two properties: <code>prevButton</code>
+			and <code>nextButton</code></p>
+		<hr>
+		<h4 class="option-head">responsive</h4>
+		<p class="option-item">
+			You can also set any properties depending on gallery width.<br>
+			For example: 
+			<code><pre>
+	768: {
+		height: 300,
+		showThumbnails: false,
+		items: 4,
+		singleLine: true,
+		thumbHeight: 50
+	}</pre></code>
+These properties will be applying from 768px gallery (not screen) width.
+		</p>
+	</div>
+</section>
+<footer>
+	<h5>
+		<a href="https://iamden.xyz">iamden &copy;</a>
+	</h5>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src='gallery.js'></script>
 
 <script>
 
 		$('.container-gallery').gallery({
-			height: 650,
+			height: '35vw',
 			items: 6,
+			thumbHeight: 100,
+			showThumbnails: true,
+			320: {
+				items: 1
+			},
 			480: {
 				items: 2,
-				height: 400,
-				thmbHeight: 100
+				//height: 250,
+				//thumbHeight: 60
 			},
 			768: {
-				
-				items: 3,
-				height: 500,
-				thmbHeight: 120
+				//showThumbnails: false,
+				items: 4,
+				//height: 300,
+				//thumbHeight: 50
 			},
 			600: {
 				
-				items: 4
+				items: 3
 			},
-			992 : {
+			992: {
 				
 				items: 5,
-				height: 350
+				//height: 300
 			}
 
 		});
+		/*$('.container-gal').gallery({
+			height: '35vw',
+			items: 6,
+			thumbHeight: 100,
+			showThumbnails: true,
+			singleLine: true,
+			320: {
+				items: 1
+			},
+			480: {
+				items: 2,
+				//height: 250,
+				//thumbHeight: 60
+			},
+			768: {
+				
+				items: 4,
+				//height: 300,
+				//thumbHeight: 90
+			},
+			600: {
+				
+				items: 3
+			},
+			992: {
+				
+				items: 5,
+				//height: 300
+			}
+
+		});*/
 
 	</script>
 </body>

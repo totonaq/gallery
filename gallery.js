@@ -32,6 +32,8 @@
 			prevButton: prevContent,
 			nextButton: nextContent
 		},
+		showThumbnails: true,
+		singleLine: false
 	};
 
 	let options = {},
@@ -49,8 +51,10 @@
 			this.setRespProp();
 
 			this.setLargeImgDimensions();
+			this.showThumbnails();
 			this.setThumbnailsWrapWidth();
 			this.setThumbnailsDimensions();
+
 			this.changeLargeImg();
 			this.justifyImgs();
 			this.prev();
@@ -65,14 +69,14 @@
 			container.prepend('<div class="large-image">' + 
 				'</div><div class="thumbnails"></div>');
 			largeImg = container.find('.large-image')
-			container.css({
+			/*container.css({
 				'width':'100%',
 				'overflow-x':'hidden',
 				'outline':'none'
-			});
+			});*/
 			allLargeImg.push(container.find('.large-image'));
 
-			container.append('<div class="controls">' + 
+			largeImg.append('<div class="controls">' + 
 				'<div class="prev-button"></div>' + 
 				'<div class="next-button"></div></div>');
 
@@ -108,21 +112,28 @@
 
 		},
 
-		setStyles: function() {
+		setStyles: function() {	
 			container.css({
 				'width':'100%',
-				'overflow-x':'hidden',
+				'outline':'none',
 				'position':'relative'
 			})
 			.find('div').css({
 				'background-position':'center',
 				'background-repeat':'no-repeat'
 			});
+			//thumbWrap.css('width', '100%');
+			largeImg.css({
+				'position': 'relative',
+				'box-sizing': 'border-box'
+			});
 
-			largeImg.css('position', 'relative');
-
-			thumbWrap.css('overflow-x', 'hidden');
-
+			
+			if (options.singleLine) {
+				container.find(thumbWrap)
+					.css('overflow-x', 'hidden');
+			}
+			
 			currentThumbs.css({
 				'display': 'flex' || '-webkit-flex' || 
 				'-moz-flex' || '-o-flex',
@@ -173,29 +184,48 @@
 
 		setLargeImgDimensions: function() {
 			for (let i = 0; i < propArr.length; i++) {
+				
 				allLargeImg[i].css({
-					'width':'100%',
+					'width': '100%',
 					'height':propArr[i].height
 				});
 			}
 		},
 
+		showThumbnails: function() {
+			if (!options.showThumbnails) {
+				container.find(thumbWrap).css('display', 'none');
+			} else {
+				container.find(thumbWrap).css('display', 'block');
+			}
+		},
+
 		setThumbnailsWrapWidth: function() {
+			//container.find(thumbWrap).width()
 			for (let i = 0; i < propArr.length; i++) {
-				allThumbs[i].width(allLargeImg[i].width() / 
+				if (propArr[i].singleLine) {
+					allThumbs[i].width(allLargeImg[i].width() / 
 					propArr[i].items * galItemLength[i]);
+				} else {
+					allThumbs[i].css('width', allLargeImg[i].width());
+				}
+				
 			}
 			
 		},
 
 		setThumbnailsDimensions: function() {
 			for (let i = 0; i < propArr.length; i++) {
+				var largeImgWidth = allLargeImg[i].width()
+				
 				allGalItems[i].css({
-					'width':allLargeImg[i].width() / 
+					'width':largeImgWidth / 
 					propArr[i].items,
 					'height':propArr[i].thumbHeight
 				});
+
 			}
+			
 		},
 
 		changeLargeImg: function() {
@@ -210,17 +240,17 @@
 
 				let items = $(this).parent().children();
 
-				$(this).parent().parent().next()
-					.children().removeClass('inactive');
+				$(this).parent().parent().prev()
+					.children().children().removeClass('inactive');
 				
 				if (items.index($(this)) === 0) {
-					$(this).parent().parent().next()
+					$(this).parent().parent().prev()
 						.find('.prev-button')
 						.addClass('inactive');
 				}
 				if (items.index($(this)) === 
 					items.length - 1) {
-					$(this).parent().parent().next()
+					$(this).parent().parent().prev()
 						.find('.next-button')
 						.addClass('inactive');
 				}
@@ -233,22 +263,23 @@
 			
 			prevBtn.click(function() {
 				
-				let active = $(this).parent().prev()
+				let active = $(this).parent().parent().next()
 					.find('.active').prev();
 
-				let allItems = $(this).parent().prev()
+				let allItems = $(this).parent().parent().next()
 					.find('.gallery-item');
 
 				let number = $(allItems).index(active);
 
 				if (number >= 0) {
 					
-					$(this).parent().prev().prev().css('background-image', active.css('background-image'));
+					$(this).parent().parent()
+					.css('background-image', active.css('background-image'));
 					active.addClass('active');
 					active.next().removeClass('active');
 
 				} else {
-					$(this).parent().prev().scrollLeft(0);
+					$(this).parent().parent().next().scrollLeft(0);
 				}
 				
 				methods.setPositionOfItem.call(this, 
@@ -264,17 +295,17 @@
 			
 			nextBtn.click(function() {
 
-				let active = $(this).parent().prev()
+				let active = $(this).parent().parent().next()
 					.find('.active').next();
 
-				let allItems = $(this).parent().prev()
+				let allItems = $(this).parent().parent().next()
 					.find('.gallery-item');
 
 				let number = $(allItems).index(active);
 
 				if (number < allItems.length) {
 
-					$(this).parent().prev().prev()
+					$(this).parent().parent()
 						.css('background-image', 
 							active.css('background-image'));
 					active.addClass('active');
@@ -282,7 +313,7 @@
 
 				} else {
 
-					$(this).parent().prev()
+					$(this).parent().parent().next()
 						.scrollLeft(allItems.length * 
 							allItems.width());
 				}
@@ -300,16 +331,16 @@
 			if (active.position() != undefined 
 				&& active.position().left < -5) {
 
-					$(this).parent().prev()
+					$(this).parent().parent().next()
 						.scrollLeft((number + 1)* allItems.width() - 
 						$(this).parent().parent().width());
 			}
 
 			if (active.position() != undefined 
 				&& active.position().left >= 
-				$(this).parent().prev().width() - 5) {
+				$(this).parent().parent().next().width() - 5) {
 
-					$(this).parent().prev().scrollLeft((number) * 
+					$(this).parent().parent().next().scrollLeft((number) * 
 						allItems.width())
 
 			}
@@ -375,6 +406,7 @@
 			$(window).on('resize', function() {
 				
 				methods.setLargeImgDimensions();
+				methods.showThumbnails();
 				methods.setThumbnailsWrapWidth();
 				methods.setThumbnailsDimensions();
 				methods.setRespProp();
