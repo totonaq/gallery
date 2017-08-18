@@ -1,5 +1,5 @@
 # Gallery Plugin
-This is a simple jQuery plugin of responsive gallery.
+This is a simple jQuery responsive gallery plugin.
 
 ## Install
 
