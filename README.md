@@ -1,5 +1,6 @@
 # Gallery Plugin
-This is a simple jQuery responsive gallery plugin with thumbnails.
+
+This is a simple responsive jQuery gallery with thumbnails.
 
 ## Install
 
