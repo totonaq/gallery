@@ -5,6 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Gallery</title>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Mada|Sedgwick+Ave" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Indie+Flower|Mada|Sedgwick+Ave" rel="stylesheet">
@@ -14,18 +15,22 @@
 			margin: 0;
 			padding: 0;
 		}
-		ul {
-			list-style-type: none;
+		ul, .visible {
 			display: -webkit-flex;
 			display: -moz-flex;
 			display: -ms-flex;
 			display: -o-flex;
 			display: flex;
+			flex-flow: row wrap;
+			
+		}
+		ul {
+			list-style-type: none;
 		}
 		ul > li {
 			padding: 0 1rem;
 		}
-		ul > li > a {
+		a {
 
 			text-decoration: none;
 
@@ -36,31 +41,66 @@
 		body {
 			font-family: 'Sedgwick Ave', cursive;
 			position: relative;
+
+		}
+		body:after {
+			background: url('images/many.jpg') center center/ cover no-repeat;
+			bottom: 0;
+			content: '';
+			filter: grayscale(100%);
+			opacity: .2;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: -1;
 		}
 		header {
-			background-color: rgba(255,255,255,.7);
+			background-color: rgba(255,255,255,.9);
+			/*box-shadow: 0 2px 10px #555;
+			border-bottom: 1px solid #ddd;*/
 			display: -webkit-flex;
 			display: -moz-flex;
 			display: -ms-flex;
 			display: -o-flex;
 			display: flex;
+			flex-flow: row wrap;
 			justify-content: space-between;
 			padding: 2rem;
+			position: relative;
 		}
 		header a {
-			color: #000;
+			color: #555;
 		}
-		.logo:hover {
-			color: #3fb5b0;
+		.bar {
+			background-color: transparent;
+			border: none;
+			display: none;
+			position: absolute;
+			right: 2rem;
+		}
+		.bar:focus {
+			border: none;
+			outline: none;
+		}
+		.bar i {
+			color: #555;
+			font-size: 1.5rem;
+		}
+		.logo {
+			text-decoration: underline;
+		}
+		.logo:hover,
+		.descr a:hover {
+			color: #008080;
 		}
 		.document {
 			
 		}
 
 		.wrapper {
-			padding: 4rem;
+			padding: 6rem 0;
 			margin: auto;
-			width: 50%;
+			width: 65%;
 		}
 		.wrapper .large-image {
 			border: 5px solid #fff;
@@ -74,42 +114,16 @@
 			margin-top: 3rem;
 		}
 		.heading {
+			/*color: #a2a230;*/
 			font-size: 2rem;
 			padding: 1rem 0;
+			text-align: left;
 		}
-		.container-gal {
+		/*.container-gal {
 			margin-top: 50px;
-		}
-		.descr {
-			background-color: rgba(220,220,220,.4);
-			/*border: 5px solid #fff;*/
-			-webkit-box-shadow: 0 7px 10px #666;
-			box-shadow: 0 7px 25px #666;
-			color: #000;
-			font: 1.5rem/1.5 'Indie Flower', cursive;
-			margin: 4rem 4rem 0;
-			padding: 2rem;
-			width: 50%;
-		}
-		.back {
-			background: url('images/many.jpg') center center/ cover no-repeat;
-			bottom: 0;
-			filter: grayscale(100%);
-			opacity: .2;
-			position: absolute;
-			top: 0;
-			width: 100%;
-			z-index: -1;
-		}
-		.options {
-			padding-bottom: 4rem;
-		}
-		.options h1 {
-			font-size: 1.4rem;
-			text-align: center;
-			
-			text-transform: uppercase;
-		}
+		}*/
+		.document-descr-wrap,
+		.styles-descr-wrap,
 		.options-descr-wrap {
 			display: -webkit-flex;
 			display: -moz-flex;
@@ -117,25 +131,156 @@
 			display: -o-flex;
 			display: flex;
 			font-size: 1.2rem;
+			
+		}
+		.document-descr-wrap,
+		.styles-descr-wrap {
+			justify-content: flex-start;
+		}
+		.options-descr-wrap {
 			justify-content: flex-end;
 		}
-		.options-list {
+		.descr {
+			background-color: 
+			 rgba(220,220,220,.4);/*rgba(0,128,128,.2);*/
+			/*border: 5px solid #fff;*/
+			-webkit-box-shadow: 0 7px 10px #666;
+			/*border-radius: 10px;*/
+			box-shadow: 0 7px 25px #666;
+			color: #000;
+			font: 1.5rem/1.5 'Indie Flower', cursive;
+			margin: 4rem 0 0;
+			padding: 2rem;
+			width: 35%;
+		}
+		.options-descr-wrap .descr,
+		.styles-descr-wrap .descr {
+			margin: 0 0 2rem;
+		}
+		.options-descr-wrap .descr {
+			background-color: rgba(0,128,128,.2);
+			
+		}
+		.styles-descr-wrap .descr {
+			background-color: rgba(120,120,195,.2);
+		}
+		.descr a {
+			color: #000;
+			text-decoration: underline;
+		}
+		
+		.options {
+			padding-bottom: 4rem;
+		}
+		.options h1,
+		.styles h1 {
+			margin-bottom: 2rem;
+		}
+		/*.styles {
+			padding: 0 4rem 4rem;
+		}*/
+		.footnote {
+			
+			display: block;
+			font-size: 1rem;
+			line-height: 1.2;
+			padding-top: 1rem;
+		}
+		.resp {
+			color: #008080;
+			font-family: 'Mada', sans-serif;
+			
+		}
+		.styles pre {
 			background-color: rgba(255,255,255,.7);
 			-webkit-box-shadow: 0 7px 10px #666;
+			box-shadow: 0 7px 25px #666;
+			margin: 2rem auto 6rem;
+			overflow-x: scroll;
+			padding: 1rem 2rem;
+			width: 60%;
+		}
+		pre {
+			overflow-x: scroll;
+		}
+		pre code {
+			background-color: transparent;
+			line-height: 2;
+			
+		}
+	
+		/*.options h1 {
+			color: #1c6966;
+		}
+		.styles h1 {
+			color: #3c588c;
+		}*/
+		.styles code span {
+			font-size: 1.2rem;
+		}
+		.g-tag, .g-title {
+			color: #000080;
+		}
+		.g-attribute {
+			color: #008080;
+		}
+		.g-value {
+			color: #bd240d;
+		}
+		section {
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			padding: 0 2rem;
+		}
+		section h1 {
+			font-size: 1.4rem;
+			text-align: center;
+			text-transform: uppercase;
+		}
+		
+		.options-list,
+		.styles-list {
+			background-color: rgba(255,255,255,.7);
+			-webkit-box-shadow: 0 7px 10px #666;
+			box-sizing: border-box;
 			box-shadow: 0 7px 25px #666;
 			font-family: 'Indie Flower', cursive;
 			font-size: 1.2rem;
 			margin: 2rem auto;
-			padding: 1rem 2rem;
-			width: 60%;
+			padding: 1rem 2rem 2rem;
+			width: 65%;
 		}
-		.option-head {
-			color: #3fb5b0;
+		.styles-list {
+			
+		}
+		.styles-img {
+			display: none;
+			margin-top: 2rem;
+			text-align: center;
+		}
+		.styles-img img {
+			filter: grayscale(50%);
+			width: 80%;
+		}
+		.option-head,
+		.style-head {
+			color: #008080;
 			font-family: 'Mada', sans-serif;
 			font-size: 1.4rem;
 		}
-		.option-item {
+		.style-head {
+			color: #769de8;
+		}
+		.option-item,
+		.style-item {
 			padding-bottom: 1rem;
+		}
+		/*.option-item:nth-of-type(2n) {
+			color: #bd240d;
+		}*/
+		.opt-value {
+			color: #000080;
 		}
 		hr {
 			border: 1px solid #e6e6e6;
@@ -143,30 +288,59 @@
 		code {
 			background-color: #e1e1e1;
 			border-radius: 2px;
+
 			padding: 3px;
 		}
 		footer {
 			background-color: rgba(214,214,214,.7);
-			padding: 1rem 0;
+			padding: 1.5rem 0;
 			text-align: center;
 		}
 		footer a {
 			color: #343434;
-			font-family: 'Mada', sans-serif;
-			font-weight: bold;
+			font: bold 1rem 'Mada', sans-serif;
 			text-decoration: none;
 			text-transform: uppercase;
 		}
 		footer a:hover {
-			color: #3fb5b0;
+			color: #008080;
+		}
+		@media all and (max-width: 768px) {
+			.bar {
+				display: block;
+			}
+			ul {
+				display: none;
+				margin-top: 50px;
+			}
+			.descr {
+				
+				width: 100%;
+			}
+			
+			.wrapper {
+				width: auto;
+			}
+			.options-list,
+			.styles-list {
+			
+				width: auto;
+			}
+			.options-list {
+				padding: 1rem 1rem 2rem;
+			}
+			.styles pre {
+				width: auto;
+			}
 		}
 	</style>
 </head>
 <body>
 <header>
 	<a class="logo" href="https://github.com/totonaq/Gallery-Plugin">gallery.js</a>
+	<button class="bar"><i class="fa fa-bars" aria-hidden="true"></i></button>
 	<nav>
-		<ul>
+		<ul id="list">
 			<li><a href="#demo">Demo</a></li>
 			<li><a href="#options">Options</a></li>
 			<li><a href="https://github.com/totonaq/Gallery-Plugin/archive/master.zip">Download</a></li>
@@ -174,8 +348,11 @@
 	</nav>
 </header>
 <section class="document">
-	<div class="back"></div>
-	<p class="descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis animi vero quidem fuga dolorum voluptates non iste asperiores numquam quam totam nesciunt repellendus sunt, explicabo ipsam veritatis exercitationem. Iste, odio!</p>
+	
+	<div class="document-descr-wrap">
+		<p class="descr">Gallery.js is a simple gallery plugin with few options. You can customize it using these options as well as <a href="#styles">css</a></p>
+	</div>
+	
 	<div class="wrapper">
 
 	<h1 id="demo" class="heading">Peace begins with a smile...</h1>
@@ -229,7 +406,11 @@
 	<!--<div class="options-descr-wrap">
 		<p class="descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis animi vero quidem fuga dolorum voluptates non iste asperiores numquam quam totam nesciunt repellendus sunt, explicabo ipsam veritatis exercitationem. Iste, odio!</p>
 	</div>-->
-	
+	<div class="options-descr-wrap">
+		<p class="descr">Olny 6 options to customize the plugin
+		<span class="footnote"><span class="resp">responsive</span> is not an option but a generalized title for gallery's breakpoints</span>
+		</p>
+	</div>
 	<div class="options-list">
 		<h4 class="option-head">height</h4>
 		<p class="option-item">
@@ -295,17 +476,73 @@
 		<p class="option-item">
 			You can also set any properties depending on gallery width.<br>
 			For example: 
-			<code><pre>
-	768: {
-		height: 300,
-		showThumbnails: false,
-		items: 4,
-		singleLine: true,
-		thumbHeight: 50
-	}</pre></code>
-These properties will be applying from 768px gallery (not screen) width.
+			<pre><code>	768: {
+		height: <span class="opt-value">300</span>,
+		showThumbnails: <span class="opt-value">false</span>,
+		items: <span class="opt-value">4</span>,
+		singleLine: <span class="opt-value">true</span>,
+		thumbHeight: <span class="opt-value">50</span>
+	}</code></pre>
+These properties will be applied from 768px gallery width (not screen width).
 		</p>
 	</div>
+</section>
+<section id="styles" class="styles">
+	<h1>classes</h1>
+	<div class="styles-descr-wrap">
+		<p class="descr">Use these classes to customize your gallery. Set any icons in place of <code>...</code> to make your control buttons more attractive</p>
+	</div>
+	
+	<pre>
+<code>
+	<span class="g-tag">&lt;<span class="g-title">div </span><span class="g-attribute">class</span>=<span class="g-value">"container-gallery"</span>&gt;</span>
+	    <span class="g-tag">&lt;<span class="g-title">div </span><span class="g-attribute">class</span>=<span class="g-value">"large-img"</span>&gt;</span>
+	        <span class="g-tag">&lt;<span class="g-title">div </span><span class="g-attribute">class</span>=<span class="g-value">"controls"</span>&gt;</span>
+	            <span class="g-tag">&lt;<span class="g-title">div </span><span class="g-attribute">class</span>=<span class="g-value">"prev-button inactive"</span>&gt;...</span><span class="g-tag">&lt;/<span class="g-title">div</span>&gt;</span>
+	            <span class="g-tag">&lt;<span class="g-title">div </span><span class="g-attribute">class</span>=<span class="g-value">"next-button"</span>&gt;...</span><span class="g-tag">&lt;/<span class="g-title">div</span>&gt;</span>
+	        <span class="g-tag">&lt;/<span class="g-title">div</span>&gt;</span>
+	    <span class="g-tag">&lt;/<span class="g-title">div</span>&gt;</span>
+	    <span class="g-tag">&lt;<span class="g-title">div </span><span class="g-attribute">class</span>=<span class="g-value">"thmb-wrap"</span>&gt;</span>
+	        <span class="g-tag">&lt;<span class="g-title">div </span><span class="g-attribute">class</span>=<span class="g-value">"thumbnails"</span>&gt;</span>
+	            <span class="g-tag">&lt;<span class="g-title">div </span><span class="g-attribute">class</span>=<span class="g-value">"gallery-item active"</span>&gt;</span><span class="g-tag">&lt;/<span class="g-title">div</span>&gt;</span>
+	            <span class="g-tag">&lt;<span class="g-title">div </span><span class="g-attribute">class</span>=<span class="g-value">"gallery-item"</span>&gt;</span><span class="g-tag">&lt;/<span class="g-title">div</span>&gt;</span>
+	            <span class="g-tag">&lt;<span class="g-title">div </span><span class="g-attribute">class</span>=<span class="g-value">"gallery-item"</span>&gt;</span><span class="g-tag">&lt;/<span class="g-title">div</span>&gt;</span>
+	        <span class="g-tag">&lt;/<span class="g-title">div</span>&gt;</span>
+	    <span class="g-tag">&lt;/<span class="g-title">div</span>&gt;</span>
+	<span class="g-tag">&lt;/<span class="g-title">div</span>&gt;</span>
+</code>
+	</pre>
+	<!--<div class="styles-img">
+		<img src="images/classes3.png" alt="">
+	</div>
+	<div class="styles-list">
+		<h4 class="style-head">.container-gallery</h4>
+		<p class="style-item">Default container for initializing the plugin. It can have any name</p>
+		<hr>
+		<h4 class="style-head">.large-img</h4>
+		<p class="style-item">Main image</p>
+		<hr>
+		<h4 class="style-head">.controls</h4>
+		<p class="style-item">Controls wrapper</p>
+		<hr>
+		<h4 class="style-head">.prev-button</h4>
+		<p class="style-item">Previous button</p>
+		<hr>
+		<h4 class="style-head">.next-button</h4>
+		<p class="style-item">Next button</p>
+		<hr>
+		<h4 class="style-head">.inactive</h4>
+		<p class="style-item">Additional class for buttons when the last (or first) image is reached</p>
+		<hr>
+		<h4 class="style-head">.thmb-wrap</h4>
+		<p class="style-item">Thumbnails block wrapper</p>
+		<hr>
+		<h4 class="style-head">.gallery-item</h4>
+		<p class="style-item">Single thumbnail</p>
+		<hr>
+		<h4 class="style-head">.active</h4>
+		<p class="style-item">Additional class for a thumbnail of the current image</p>
+	</div>-->
 </section>
 <footer>
 	<h5>
@@ -315,37 +552,49 @@ These properties will be applying from 768px gallery (not screen) width.
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src='gallery.js'></script>
-
+<script>
+	document.querySelector(".bar").addEventListener("click", function() {
+			var list = document.querySelector("#list");
+			list.classList.toggle("visible");
+		});
+</script>
 <script>
 
 		$('.container-gallery').gallery({
 			height: '35vw',
 			items: 6,
-			thumbHeight: 100,
+			thumbHeight: '10vw',
 			showThumbnails: true,
+			singleLine: false,
+			0: {
+				height: 200,
+				items: 2,
+				thumbHeight: 50
+			},
 			320: {
-				items: 1
+				height: 300,
+				items: 3,
+				thumbHeight: 70
 			},
 			480: {
-				items: 2,
-				//height: 250,
-				//thumbHeight: 60
+				height: 300,
+				thumbHeight: 100,
+				items: 3
+				
+			},
+			600: {
+				height: 300,
+				items: 4
 			},
 			768: {
+				
 				//showThumbnails: false,
-				items: 4,
+				items: 4
 				//height: 300,
 				//thumbHeight: 50
 			},
-			600: {
-				
-				items: 3
-			},
-			992: {
-				
-				items: 5,
-				//height: 300
-			}
+			
+		
 
 		});
 		/*$('.container-gal').gallery({

@@ -167,7 +167,7 @@
 							keys[item + 1]) {
 						options = $.extend({}, 
 							respPropArr[i], 
-							propArr[i][keys[item + 1]]);
+							propArr[i][keys[item]]);
 						} else {
 							resp(item + 1);
 						}
